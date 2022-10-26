@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    padding: 20px;
+    background: #f1f1f1;
+}
+
+.main-column {
+    /*float: left;*/
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.row-link {
+    color: rgba(0, 0, 0, 0.9);
+    text-decoration: none;
+}
+
+/* Add a card effect for articles */
+.card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.todo-item {
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+.btn {
+    background-color: #FAFBFC;
+    display: inline-block;
+    width: 100px;
+    white-space: normal;
+    word-wrap: break-word;
+    padding: 10px;
+    margin-right: 10px;
+    text-align: center;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.modal-pop-up {
+    position: fixed;
+    z-index: 999;
+    top: 20%;
+    left: 50%;
+    width: 300px;
+    margin-left: -150px;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px;
+}

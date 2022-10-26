@@ -3,9 +3,14 @@ import type { Component } from 'vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'home',
-    component: (): Promise<Component> => import('../pages/HomePage.vue'),
+    path: '/lists',
+    name: 'lists',
+    component: (): Promise<Component> => import('../pages/ListsPage.vue'),
+  },
+  {
+    path: '/list/:id',
+    name: 'list',
+    component: (): Promise<Component> => import('../pages/ListPage.vue'),
   },
 ];
 
