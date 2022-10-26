@@ -2,8 +2,8 @@
 // eslint-disable-next-line vue/require-prop-types
 const props = defineProps(['id', 'title', 'content']);
 
-const max_lines_to_show = 3;
-const lines_to_show = Math.min(props.content.length, max_lines_to_show);
+const max_lines_number = 3;
+const lines = props.content.slice(0, max_lines_number);
 </script>
 
 <template>
@@ -16,10 +16,10 @@ const lines_to_show = Math.min(props.content.length, max_lines_to_show);
         <h4>{{ props.title }}</h4>
         <ul>
           <div v-if="props.content.length > 0">
-            <li v-for="line_index in lines_to_show" :key="line_index">
-              {{ props.content[line_index - 1].text }}
+            <li v-for="(line, index) in lines" :key="index">
+              {{ line.text }}
             </li>
-            <div v-if="lines_to_show === max_lines_to_show">...</div>
+            <div v-if="props.content.length > max_lines_number">...</div>
           </div>
         </ul>
       </div>

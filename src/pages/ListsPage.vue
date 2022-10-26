@@ -4,16 +4,6 @@ import { getMaxId } from '../js/list.js';
 
 const lists = ref(JSON.parse(localStorage.getItem('lists')) ?? []);
 
-// function getMaxId(object) {
-//   const ids = object.map((object) => {
-//     return object.id;
-//   });
-//   if (ids.length === 0) {
-//     return 0;
-//   }
-//   return Math.max(...ids);
-// }
-
 function newList() {
   lists.value.push({
     id: getMaxId(lists.value) + 1,
