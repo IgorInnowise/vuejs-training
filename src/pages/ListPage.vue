@@ -2,6 +2,10 @@
 import { useRoute } from 'vue-router';
 import { router } from '../router/index.ts';
 import { useLists } from '../composables/lists.ts';
+import ConfirmButton from '../components/ConfirmButton.vue';
+
+// TODO: Refactor.
+const delete_text = 'Delete';
 
 const {
   lists,
@@ -9,6 +13,7 @@ const {
   cancelChanges,
   addItem,
   removeItem,
+  deleteList,
   toggleCheckbox,
   getListIndexById,
 } = useLists();
@@ -37,6 +42,12 @@ function remove(item_index) {
 function toggle(item_index) {
   toggleCheckbox(list_index, item_index);
 }
+
+function deleteConfirmed() {
+  deleteList(list_index);
+  saveChanges();
+  router.push('/lists');
+}
 </script>
 
 <template>
@@ -44,7 +55,11 @@ function toggle(item_index) {
     <div class="buttons">
       <button class="btn" @click="save">Save</button>
       <button class="btn" @click="cancel">Cancel</button>
-      <delete-pop-up-component :list_id="list_id"></delete-pop-up-component>
+      <confirm-button
+        :text="delete_text"
+        @onClick="deleteConfirmed"
+      ></confirm-button>
+      <!-- <delete-pop-up-component :list_id="list_id"></delete-pop-up-component> -->
       <button class="btn" @click="add">Add item</button>
     </div>
     <h2>{{ lists[list_index].title }}</h2>

@@ -7,7 +7,6 @@ import App from './App.vue';
 import Navbar from './components/NavBar.vue';
 import ListCard from './components/ListCard.vue';
 import DeletePopUp from './components/DeletePopUp.vue';
-import ConfirmPopUp from './components/ConfirmPopUp.vue';
 
 import { router } from './router';
 
@@ -18,7 +17,6 @@ app.use(router);
 app.component('NavbarComponent', Navbar);
 app.component('ListCardComponent', ListCard);
 app.component('DeletePopUpComponent', DeletePopUp);
-app.component('ConfirmPopUpComponent', ConfirmPopUp);
 
 router.isReady().finally(() => {
   app.mount('#app');
