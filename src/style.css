@@ -9,7 +9,6 @@ body {
 }
 
 .main-column {
-    /*float: left;*/
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -25,11 +24,6 @@ body {
     background-color: white;
     padding: 20px;
     margin-top: 20px;
-}
-
-.todo-item {
-    padding: 20px;
-    margin-top: 10px;
 }
 
 .buttons {
@@ -55,6 +49,7 @@ body {
 }
 
 .modal-pop-up {
+    background-color: #FAFBFC;
     position: fixed;
     z-index: 999;
     top: 20%;
@@ -70,4 +65,9 @@ body {
     font-size: 14px;
     font-weight: 500;
     padding: 10px;
+}
+
+input[type=checkbox] {
+    transform: scale(2);
+    margin-right: 10px;
 }
