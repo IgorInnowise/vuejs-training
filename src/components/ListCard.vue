@@ -24,5 +24,6 @@ const lines = props.content.slice(0, max_lines_number);
         </ul>
       </div>
     </router-link>
+    <delete-pop-up-component :list_id="props.id"></delete-pop-up-component>
   </div>
 </template>

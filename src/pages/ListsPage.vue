@@ -1,17 +1,7 @@
 <script setup>
-import { ref } from 'vue';
-import { getMaxId } from '../js/list.js';
+import { useLists } from '../composables/lists.ts';
 
-const lists = ref(JSON.parse(localStorage.getItem('lists')) ?? []);
-
-function newList() {
-  lists.value.push({
-    id: getMaxId(lists.value) + 1,
-    title: 'New list',
-    content: [],
-  });
-  localStorage.setItem('lists', JSON.stringify(lists.value));
-}
+const { lists, newList } = useLists();
 </script>
 
 <template>

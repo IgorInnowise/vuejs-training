@@ -1,50 +1,51 @@
 <script setup>
-import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { getMaxId } from '../js/list.js';
 import { router } from '../router/index.ts';
+import { useLists } from '../composables/lists.ts';
 
-const lists = ref(JSON.parse(localStorage.getItem('lists')) ?? []);
+const {
+  lists,
+  saveChanges,
+  cancelChanges,
+  addItem,
+  removeItem,
+  toggleCheckbox,
+  getListIndexById,
+} = useLists();
 
 const route = useRoute();
-const id = route.params.id; // read parameter id (it is reactive)
-const list_index = lists.value.findIndex((item) => item.id == id);
+const list_id = route.params.id;
+const list_index = getListIndexById(list_id);
 
-function saveChanges() {
-  localStorage.setItem('lists', JSON.stringify(lists.value));
+function save() {
+  saveChanges();
   router.push('/lists');
 }
 
-function cancelChanges() {
-  lists.value = JSON.parse(localStorage.getItem('lists')) ?? [];
+function cancel() {
+  cancelChanges();
 }
 
-function deleteList() {
-  lists.value.splice(list_index, 1);
-  saveChanges();
+function add() {
+  addItem(list_index);
 }
 
-function addItem() {
-  lists.value[list_index].content.push({
-    id: getMaxId(lists.value[list_index].content) + 1,
-    text: 'New item',
-  });
+function remove(item_index) {
+  removeItem(list_index, item_index);
 }
 
-function removeItem(item_index) {
-  lists.value[list_index].content.splice(item_index, 1);
+function toggle(item_index) {
+  toggleCheckbox(list_index, item_index);
 }
-
-const pop_up_opened = ref(false);
 </script>
 
 <template>
   <div class="main-column">
     <div class="buttons">
-      <button class="btn" @click="saveChanges">Save</button>
-      <button class="btn" @click="cancelChanges">Cancel</button>
-      <button class="btn" @click="pop_up_opened = true">Delete</button>
-      <button class="btn" @click="addItem">Add item</button>
+      <button class="btn" @click="save">Save</button>
+      <button class="btn" @click="cancel">Cancel</button>
+      <delete-pop-up-component :list_id="list_id"></delete-pop-up-component>
+      <button class="btn" @click="add">Add item</button>
     </div>
     <h2>{{ lists[list_index].title }}</h2>
     <div
@@ -53,19 +54,15 @@ const pop_up_opened = ref(false);
       class="todo-item"
     >
       <input
-        v-model="lists[list_index].content[item_index].text"
-        contenteditable
+        v-model="lists[list_index].content[item_index].checked"
+        type="checkbox"
       />
-      <button class="btn" @click="removeItem(item_index)">Remove</button>
+      <input
+        v-model="lists[list_index].content[item_index].text"
+        class="list-text"
+        @keyup.exact.enter="toggle(item_index)"
+      />
+      <button class="btn" @click="remove(item_index)">Remove</button>
     </div>
-    <!-- Delete Modal START -->
-    <Teleport to="body">
-      <div v-if="pop_up_opened" class="modal-pop-up">
-        <p>Sure?</p>
-        <button class="btn" @click="deleteList()">Delete</button>
-        <button class="btn" @click="pop_up_opened = false">Cancel</button>
-      </div>
-    </Teleport>
-    <!-- Delete Modal END -->
   </div>
 </template>
