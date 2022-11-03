@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { getMaxId } from '../js/object-helper.js';
+import { getMaxId } from '../object-helper';
 
 export const useLists = () => {
   const lists = ref(JSON.parse(localStorage.getItem('lists') ?? '[]'));
