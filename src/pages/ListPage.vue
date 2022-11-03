@@ -22,32 +22,36 @@ const route = useRoute();
 const list_id = route.params.id;
 const list_index = getListIndexById(list_id);
 
-function save() {
+const save = () => {
   saveChanges();
   router.push('/lists');
-}
+};
 
-function cancel() {
+const cancel = () => {
   cancelChanges();
-}
+};
 
-function add() {
+const add = () => {
   addItem(list_index);
-}
+};
 
-function remove(item_index) {
+const remove = (item_index) => {
   removeItem(list_index, item_index);
-}
+};
 
-function toggle(item_index) {
+const toggle = (item_index) => {
   toggleCheckbox(list_index, item_index);
-}
+};
 
-function deleteConfirmed() {
+const deleteConfirmed = () => {
   deleteList(list_index);
   saveChanges();
   router.push('/lists');
-}
+};
+
+const updateTitle = (e) => {
+  lists.value[list_index].title = e.target.innerText;
+};
 </script>
 
 <template>
@@ -57,12 +61,14 @@ function deleteConfirmed() {
       <button class="btn" @click="cancel">Cancel</button>
       <confirm-button
         :text="delete_text"
-        @onClick="deleteConfirmed"
+        @on-click="deleteConfirmed"
       ></confirm-button>
-      <!-- <delete-pop-up-component :list_id="list_id"></delete-pop-up-component> -->
+      <!-- <delete-pop-up-component :listId="list_id"></delete-pop-up-component> -->
       <button class="btn" @click="add">Add item</button>
     </div>
-    <h2>{{ lists[list_index].title }}</h2>
+    <h2 contenteditable @input="updateTitle($event)">
+      {{ lists[list_index].title }}
+    </h2>
     <div
       v-for="(item, item_index) in lists[list_index].content"
       :key="item.id"

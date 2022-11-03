@@ -2,7 +2,12 @@
 import { ref } from 'vue';
 
 const emit = defineEmits(['onClick']);
-const props = defineProps(['text']);
+const props = defineProps({
+  text: {
+    type: String,
+    default: 'Confirm',
+  },
+});
 
 function handleClick(e) {
   emit('onClick', e);

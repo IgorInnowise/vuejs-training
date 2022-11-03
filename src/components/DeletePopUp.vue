@@ -5,8 +5,13 @@ import { useLists } from '../composables/lists.ts';
 
 const { deleteList, saveChanges, getListIndexById } = useLists();
 
-const props = defineProps(['list_id']);
-const list_index = getListIndexById(props.list_id);
+const props = defineProps({
+  listId: {
+    type: Number,
+    default: 0,
+  },
+});
+const list_index = getListIndexById(props.listId);
 
 function deleteConfirmed() {
   deleteList(list_index);

@@ -1,14 +1,27 @@
 <script setup>
 import { useLists } from '../composables/lists.ts';
 import { router } from '../router/index.ts';
+import ConfirmButton from '../components/ConfirmButton.vue';
 
 const { saveChanges, deleteList, getListIndexById } = useLists();
 
 // TODO: Refactor.
 const delete_text = 'Delete';
 
-// eslint-disable-next-line vue/require-prop-types
-const props = defineProps(['id', 'title', 'content']);
+const props = defineProps({
+  id: {
+    type: Number,
+    default: 0,
+  },
+  title: {
+    type: String,
+    default: 'New list',
+  },
+  content: {
+    type: Array,
+    default: () => [],
+  },
+});
 
 // TODO: Move to enum file.
 const max_lines_number = 3;
@@ -41,8 +54,8 @@ function deleteConfirmed() {
     </router-link>
     <confirm-button
       :text="delete_text"
-      @onClick="deleteConfirmed"
+      @on-click="deleteConfirmed"
     ></confirm-button>
-    <delete-pop-up-component :list_id="props.id"></delete-pop-up-component>
+    <!-- <delete-pop-up-component :listId="props.id"></delete-pop-up-component> -->
   </div>
 </template>
