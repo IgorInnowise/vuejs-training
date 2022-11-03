@@ -1,0 +1,21 @@
+
+#main-wrapper {
+    margin: 100px 400px;
+}
+
+#main-wrapper #title {
+    padding: 20px;
+    font-size: 30px;
+}
+
+#main-wrapper #notes-wrapper {
+    margin: 20px 0;
+}
+
+#main-wrapper .note {
+    margin: 20px 0;
+}
+
+#main-wrapper .note .note-name {
+    padding: 0 200px 0 20px;
+}
