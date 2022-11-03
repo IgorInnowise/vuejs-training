@@ -27,3 +27,7 @@ const deleteListConfirmed = (list_id) => {
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+@import '../css/lists-component.scss';
+</style>
