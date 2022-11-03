@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { getMaxId } from '../js/object-helper.js';
 
-export function useLists() {
+export const useLists = () => {
   const lists = ref(JSON.parse(localStorage.getItem('lists') ?? '[]'));
 
   const saveChanges = () => {
@@ -63,4 +63,4 @@ export function useLists() {
     toggleCheckbox,
     getListIndexById,
   };
-}
+};

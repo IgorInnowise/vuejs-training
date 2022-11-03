@@ -1,5 +1,5 @@
 // Gets a max id value from objects. Example: [{"id": 1}, {"id": 2}] => 2
-export function getMaxId(objects) {
+export const getMaxId = (objects) => {
   const ids = objects.map((object) => {
     return object.id;
   });
@@ -7,4 +7,4 @@ export function getMaxId(objects) {
     return 0;
   }
   return Math.max(...ids);
-}
+};

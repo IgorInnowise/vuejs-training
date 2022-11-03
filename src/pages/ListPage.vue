@@ -59,9 +59,8 @@ const updateTitle = (e) => {
       <button class="btn" @click="cancel">Cancel</button>
       <confirm-button
         :text="ButtonsName.DELETE"
-        @on-click="deleteConfirmed"
+        @on-confirm="deleteConfirmed"
       ></confirm-button>
-      <!-- <delete-pop-up-component :listId="list_id"></delete-pop-up-component> -->
       <button class="btn" @click="add">Add item</button>
     </div>
     <h2 contenteditable @input="updateTitle($event)">

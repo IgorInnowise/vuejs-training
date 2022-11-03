@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const emit = defineEmits(['onClick']);
+const emit = defineEmits(['onConfirm']);
 const props = defineProps({
   text: {
     type: String,
@@ -9,14 +9,14 @@ const props = defineProps({
   },
 });
 
-function handleClick(e) {
-  emit('onClick', e);
-}
+const confirmClick = (e) => {
+  emit('onConfirm', e);
+};
 
 const pop_up_opened = ref(false);
-function togglePopUp() {
+const togglePopUp = () => {
   pop_up_opened.value = !pop_up_opened.value;
-}
+};
 </script>
 
 <template>
@@ -25,7 +25,7 @@ function togglePopUp() {
   <Teleport to="body">
     <div v-if="pop_up_opened" class="modal-pop-up">
       <p>Sure?</p>
-      <button class="btn" @click="handleClick" @keyup.enter="handleClick">
+      <button class="btn" @click="confirmClick" @keyup.enter="confirmClick">
         {{ props.text }}
       </button>
       <button class="btn" @click="togglePopUp" @keyup.esc="togglePopUp">

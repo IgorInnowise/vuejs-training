@@ -1,7 +1,13 @@
 <script setup>
 import { useLists } from '../composables/lists.ts';
 
-const { lists, newList } = useLists();
+const { lists, newList, saveChanges, deleteList, getListIndexById } =
+  useLists();
+
+const deleteListConfirmed = (list_id) => {
+  deleteList(getListIndexById(list_id));
+  saveChanges();
+};
 </script>
 
 <template>
@@ -12,6 +18,7 @@ const { lists, newList } = useLists();
       :key="list.id"
       :title="list.title"
       :content="list.content"
+      @delete-list="deleteListConfirmed"
     ></list-card-component>
     <div class="row" @click="newList">
       <div class="card">
