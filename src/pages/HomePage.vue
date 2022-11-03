@@ -31,10 +31,13 @@
   </div>
   <Modal :is-show-modal="open_modal">
     <template #body>
-      <div>
+      <div v-if="!isEdit">
         <p>Delete this note?</p>
-      </div></template
-    >
+      </div>
+      <div v-else>
+        <p>Edit this note?</p>
+      </div>
+    </template>
     <template #buttons>
       <button class="answer-yes" @click="deleteNote(delete_index)">Yes</button>
       <button @click="open_modal = false">No</button></template
@@ -58,6 +61,7 @@ interface someObject {
 export default defineComponent({
   components: { Modal },
   setup() {
+    const isEdit = ref(true);
     const open_modal = ref(false);
     const new_name_note = ref('');
     const delete_index = ref(0);
@@ -195,6 +199,7 @@ export default defineComponent({
       addNote,
       setDefaultValues,
       openPopupForDelete,
+      isEdit,
     };
   },
 });
