@@ -1,6 +1,5 @@
 <script setup>
 import { useLists } from '../composables/lists.ts';
-import { router } from '../router/index.ts';
 import ConfirmButton from '../components/ConfirmButton.vue';
 import { Lists } from '../enum/lists.ts';
 import { ButtonsName } from '../enum/buttons.ts';
@@ -27,7 +26,6 @@ const lines = props.content.slice(0, Lists.MAX_LINES_NUMBER);
 function deleteConfirmed() {
   deleteList(getListIndexById(props.id));
   saveChanges();
-  router.push('/lists');
 }
 </script>
 
@@ -44,7 +42,7 @@ function deleteConfirmed() {
             <li v-for="(line, index) in lines" :key="index">
               {{ line.text }}
             </li>
-            <div v-if="props.content.length > max_lines_number">...</div>
+            <div v-if="props.content.length > Lists.MAX_LINES_NUMBER">...</div>
           </div>
         </ul>
       </div>
