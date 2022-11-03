@@ -29,13 +29,23 @@
       </div>
     </div>
   </div>
-  <Modal></Modal>
+  <Modal :is-show-modal="open_modal">
+    <template #body>
+      <div>
+        <p>Delete this note?</p>
+      </div></template
+    >
+    <template #buttons>
+      <button class="answer-yes" @click="deleteNote(delete_index)">Yes</button>
+      <button @click="open_modal = false">No</button></template
+    >
+  </Modal>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, computed } from 'vue';
 
-import modal from './../components/Modal.vue';
+import Modal from './../components/Modal.vue';
 
 interface someArray {
   [key: string]: string;
@@ -46,7 +56,7 @@ interface someObject {
 }
 
 export default defineComponent({
-  components: { modal },
+  components: { Modal },
   setup() {
     const open_modal = ref(false);
     const new_name_note = ref('');

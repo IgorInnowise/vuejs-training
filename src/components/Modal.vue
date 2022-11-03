@@ -1,19 +1,19 @@
 <template>
   <Teleport to="body">
-    <div v-if="open_modal" class="modal">
-      <div>
-        <p>Delete this note?</p>
-        <button class="answer-yes" @click="deleteNote(delete_index)">
-          Yes
-        </button>
-        <button @click="open_modal = false">No</button>
-      </div>
+    <div v-if="isShowModal" class="modal">
+      <slot name="body"></slot>
+      <slot name="buttons"></slot>
     </div>
   </Teleport>
 </template>
 
-<script>
-export default {
-  name: 'modalForPage',
-};
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'ModalWindow',
+  props: {
+    isShowModal: Boolean,
+  },
+});
 </script>
