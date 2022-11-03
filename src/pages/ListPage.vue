@@ -3,9 +3,7 @@ import { useRoute } from 'vue-router';
 import { router } from '../router/index.ts';
 import { useLists } from '../composables/lists.ts';
 import ConfirmButton from '../components/ConfirmButton.vue';
-
-// TODO: Refactor.
-const delete_text = 'Delete';
+import { ButtonsName } from '../enum/buttons.ts';
 
 const {
   lists,
@@ -60,7 +58,7 @@ const updateTitle = (e) => {
       <button class="btn" @click="save">Save</button>
       <button class="btn" @click="cancel">Cancel</button>
       <confirm-button
-        :text="delete_text"
+        :text="ButtonsName.DELETE"
         @on-click="deleteConfirmed"
       ></confirm-button>
       <!-- <delete-pop-up-component :listId="list_id"></delete-pop-up-component> -->

@@ -21,7 +21,7 @@ function togglePopUp() {
 
 <template>
   <button class="btn" @click="togglePopUp">{{ props.text }}</button>
-  <!-- Delete Modal START -->
+  <!-- Confirm Modal START -->
   <Teleport to="body">
     <div v-if="pop_up_opened" class="modal-pop-up">
       <p>Sure?</p>
@@ -33,5 +33,5 @@ function togglePopUp() {
       </button>
     </div>
   </Teleport>
-  <!-- Delete Modal END -->
+  <!-- Confirm Modal END -->
 </template>

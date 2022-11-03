@@ -2,11 +2,10 @@
 import { useLists } from '../composables/lists.ts';
 import { router } from '../router/index.ts';
 import ConfirmButton from '../components/ConfirmButton.vue';
+import { Lists } from '../enum/lists.ts';
+import { ButtonsName } from '../enum/buttons.ts';
 
 const { saveChanges, deleteList, getListIndexById } = useLists();
-
-// TODO: Refactor.
-const delete_text = 'Delete';
 
 const props = defineProps({
   id: {
@@ -23,9 +22,7 @@ const props = defineProps({
   },
 });
 
-// TODO: Move to enum file.
-const max_lines_number = 3;
-const lines = props.content.slice(0, max_lines_number);
+const lines = props.content.slice(0, Lists.MAX_LINES_NUMBER);
 
 function deleteConfirmed() {
   deleteList(getListIndexById(props.id));
@@ -53,7 +50,7 @@ function deleteConfirmed() {
       </div>
     </router-link>
     <confirm-button
-      :text="delete_text"
+      :text="ButtonsName.DELETE"
       @on-click="deleteConfirmed"
     ></confirm-button>
     <!-- <delete-pop-up-component :listId="props.id"></delete-pop-up-component> -->
