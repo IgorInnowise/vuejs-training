@@ -19,3 +19,35 @@
 #main-wrapper .note .note-name {
     padding: 0 200px 0 20px;
 }
+
+#main-wrapper #notes-wrapper .note-wrapper {
+    width: 400px;
+    display: inline-block;
+    padding: 10px 10px 0;
+    margin: 10px 10px 10px 0;
+    border: 1px double black;
+}
+
+#main-wrapper #notes-wrapper .button-delete-wrapper {
+    display: inline-block;
+}
+
+.modal {
+    position: fixed;
+    z-index: 999;
+    top: 20%;
+    left: 50%;
+    width: 200px;
+    margin-left: -150px;
+    background-color: white;
+    padding: 50px;
+    border: 1px double black;
+}
+
+.answer-yes {
+    margin-right: 50px;
+}
+
+#set-default-wrapper {
+    margin-bottom: 20px;
+}
