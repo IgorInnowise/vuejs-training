@@ -56,7 +56,10 @@ const updateTitle = (e) => {
   <div class="main-column">
     <div class="buttons">
       <button class="btn" @click="save">Save</button>
-      <button class="btn" @click="cancel">Cancel</button>
+      <confirm-button
+        :text="ButtonsName.CANCEL"
+        @on-confirm="cancel"
+      ></confirm-button>
       <confirm-button
         :text="ButtonsName.DELETE"
         @on-confirm="deleteConfirmed"

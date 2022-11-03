@@ -11,6 +11,7 @@ const props = defineProps({
 
 const confirmClick = (e) => {
   emit('onConfirm', e);
+  togglePopUp();
 };
 
 const pop_up_opened = ref(false);
