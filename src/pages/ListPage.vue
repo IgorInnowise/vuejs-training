@@ -57,11 +57,11 @@ const updateTitle = (e) => {
     <div class="buttons">
       <button class="btn" @click="save">Save</button>
       <confirm-button
-        :text="ButtonsName.CANCEL"
+        :button-name="ButtonsName.CANCEL"
         @on-confirm="cancel"
       ></confirm-button>
       <confirm-button
-        :text="ButtonsName.DELETE"
+        :button-name="ButtonsName.DELETE"
         @on-confirm="deleteConfirmed"
       ></confirm-button>
       <button class="btn" @click="add">Add item</button>

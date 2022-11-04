@@ -1,38 +1,35 @@
 <script setup>
 import { ref } from 'vue';
+import ModalPopUp from '../components/ModalPopUp.vue';
 
 const emit = defineEmits(['onConfirm']);
 const props = defineProps({
-  text: {
+  buttonName: {
     type: String,
     default: 'Confirm',
   },
 });
+const is_opened = ref(false);
 
 const confirmClick = (e) => {
   emit('onConfirm', e);
-  togglePopUp();
-};
-
-const pop_up_opened = ref(false);
-const togglePopUp = () => {
-  pop_up_opened.value = !pop_up_opened.value;
+  is_opened.value = false;
 };
 </script>
 
 <template>
-  <button class="btn" @click="togglePopUp">{{ props.text }}</button>
-  <!-- Confirm Modal START -->
-  <Teleport to="body">
-    <div v-if="pop_up_opened" class="modal-pop-up">
-      <p>Sure?</p>
-      <button class="btn" @click="confirmClick" @keyup.enter="confirmClick">
-        {{ props.text }}
+  <button class="btn" @click="is_opened = true">
+    {{ props.buttonName }}
+  </button>
+  <!-- Modal START -->
+  <modal-pop-up :is-opened="is_opened">
+    <template #Text>Sure?</template>
+    <template #Buttons>
+      <button class="btn" @click="confirmClick">
+        {{ props.buttonName }}
       </button>
-      <button class="btn" @click="togglePopUp" @keyup.esc="togglePopUp">
-        Cancel
-      </button>
-    </div>
-  </Teleport>
-  <!-- Confirm Modal END -->
+      <button class="btn" @click="is_opened = false">Cancel</button>
+    </template>
+  </modal-pop-up>
+  <!-- Modal END -->
 </template>

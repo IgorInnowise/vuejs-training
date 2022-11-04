@@ -21,7 +21,7 @@ const props = defineProps({
 const lines = props.content.slice(0, Lists.MAX_LINES_NUMBER);
 
 const emit = defineEmits(['deleteList']);
-const deleteConfirmed = () => {
+const deleteList = () => {
   emit('deleteList', props.id);
 };
 </script>
@@ -45,8 +45,8 @@ const deleteConfirmed = () => {
       </div>
     </router-link>
     <confirm-button
-      :text="ButtonsName.DELETE"
-      @on-confirm="deleteConfirmed"
+      :button-name="ButtonsName.DELETE"
+      @on-confirm="deleteList"
     ></confirm-button>
   </div>
 </template>
