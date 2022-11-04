@@ -25,9 +25,7 @@ const confirmClick = (e) => {
   <modal-pop-up :is-opened="is_opened">
     <template #Text>Sure?</template>
     <template #Buttons>
-      <button class="btn" @click="confirmClick">
-        {{ props.buttonName }}
-      </button>
+      <button class="btn" @click="confirmClick">Yes</button>
       <button class="btn" @click="is_opened = false">Cancel</button>
     </template>
   </modal-pop-up>

@@ -1,22 +1,45 @@
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { getMaxId } from '../object-helper';
 
-export const useLists = () => {
-  const lists = ref(JSON.parse(localStorage.getItem('lists') ?? '[]'));
+interface Item {
+  id: number;
+  text: string;
+  checked: boolean;
+}
 
-  const saveChanges = () => {
-    localStorage.setItem('lists', JSON.stringify(lists.value));
-  };
+interface List {
+  id: number;
+  title: string;
+  content: Item[];
+}
 
-  const cancelChanges = () => {
-    lists.value = JSON.parse(localStorage.getItem('lists') ?? '[]');
-  };
+interface ListsModule {
+  lists: Ref<List[]>;
 
-  const removeItem = (
+  getListIndexById: (id: string | number) => any;
+  newList: () => void;
+  deleteList: (list_index: string | number) => void;
+  saveChanges: () => void;
+  cancelChanges: () => void;
+
+  addItem: (list_index: string | number) => void;
+  removeItem: (
     list_index: string | number,
     item_index: string | number
-  ) => {
-    lists.value[list_index].content.splice(item_index, 1);
+  ) => void;
+  toggleCheckbox: (
+    list_index: string | number,
+    item_index: string | number
+  ) => void;
+}
+
+export const useLists: () => ListsModule = () => {
+  const getListFromStorage = () => {
+    return JSON.parse(localStorage.getItem('lists') ?? '[]');
+  };
+
+  const getListIndexById = (id: string | number) => {
+    return lists.value.findIndex((list: object) => list.id == id);
   };
 
   const newList = () => {
@@ -25,7 +48,21 @@ export const useLists = () => {
       title: 'New list',
       content: [],
     });
+    saveChanges();
+  };
+
+  const deleteList = (list_index: string | number) => {
+    lists.value.splice(list_index, 1);
+  };
+
+  const lists = ref(getListFromStorage());
+
+  const saveChanges = () => {
     localStorage.setItem('lists', JSON.stringify(lists.value));
+  };
+
+  const cancelChanges = () => {
+    lists.value = getListFromStorage();
   };
 
   const addItem = (list_index: string | number) => {
@@ -36,6 +73,13 @@ export const useLists = () => {
     });
   };
 
+  const removeItem = (
+    list_index: string | number,
+    item_index: string | number
+  ) => {
+    lists.value[list_index].content.splice(item_index, 1);
+  };
+
   const toggleCheckbox = (
     list_index: string | number,
     item_index: string | number
@@ -44,23 +88,15 @@ export const useLists = () => {
       !lists.value[list_index].content[item_index].checked;
   };
 
-  const getListIndexById = (id: string | number) => {
-    return lists.value.findIndex((list: object) => list.id == id);
-  };
-
-  const deleteList = (list_index: string | number) => {
-    lists.value.splice(list_index, 1);
-  };
-
   return {
     lists,
-    saveChanges,
-    cancelChanges,
-    removeItem,
-    addItem,
+    getListIndexById,
     newList,
     deleteList,
+    saveChanges,
+    cancelChanges,
+    addItem,
+    removeItem,
     toggleCheckbox,
-    getListIndexById,
   };
 };

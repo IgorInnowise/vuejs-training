@@ -25,26 +25,9 @@ const save = () => {
   router.push('/lists');
 };
 
-const cancel = () => {
-  cancelChanges();
-};
-
-const add = () => {
-  addItem(list_index);
-};
-
-const remove = (item_index) => {
-  removeItem(list_index, item_index);
-};
-
-const toggle = (item_index) => {
-  toggleCheckbox(list_index, item_index);
-};
-
 const deleteConfirmed = () => {
   deleteList(list_index);
-  saveChanges();
-  router.push('/lists');
+  save();
 };
 
 const updateTitle = (e) => {
@@ -58,13 +41,13 @@ const updateTitle = (e) => {
       <button class="btn" @click="save">Save</button>
       <confirm-button
         :button-name="ButtonsName.CANCEL"
-        @on-confirm="cancel"
+        @on-confirm="cancelChanges"
       ></confirm-button>
       <confirm-button
         :button-name="ButtonsName.DELETE"
         @on-confirm="deleteConfirmed"
       ></confirm-button>
-      <button class="btn" @click="add">Add item</button>
+      <button class="btn" @click="addItem(list_index)">Add item</button>
     </div>
     <h2 contenteditable @input="updateTitle($event)">
       {{ lists[list_index].title }}
@@ -81,9 +64,11 @@ const updateTitle = (e) => {
       <input
         v-model="lists[list_index].content[item_index].text"
         class="list-text"
-        @keyup.exact.enter="toggle(item_index)"
+        @keyup.exact.enter="toggleCheckbox(list_index, item_index)"
       />
-      <button class="btn" @click="remove(item_index)">Remove</button>
+      <button class="btn" @click="removeItem(list_index, item_index)">
+        Remove
+      </button>
     </div>
   </div>
 </template>
