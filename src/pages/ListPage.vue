@@ -18,6 +18,7 @@ const {
   toggleCheckbox,
   getListIndexById,
   listsHaveChanges,
+  getItemIndexByPosition,
 } = useLists();
 
 const route = useRoute();
@@ -56,6 +57,39 @@ onBeforeRouteLeave((to, from) => {
 onBeforeRouteUpdate(async (to, from) => {
   return leave();
 });
+
+// Ordering & Drag and Drop START.
+const filtered_list = computed(() => {
+  const orderBy = 'position';
+  // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+  return lists.value[list_index.value].content.sort((a, b) =>
+    a[orderBy] > b[orderBy] ? 1 : -1
+  );
+});
+
+const startDrag = (event, item) => {
+  event.dataTransfer.dropEffect = 'move';
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('itemPosition', item.position);
+};
+
+const onDrop = (event, droppedItemPosition) => {
+  const draggedItemPosition = event.dataTransfer.getData('itemPosition');
+  const draggedItemIndex = getItemIndexByPosition(
+    list_index.value,
+    draggedItemPosition
+  );
+  const droppedItemIndex = getItemIndexByPosition(
+    list_index.value,
+    droppedItemPosition
+  );
+  // Swapping positions.
+  lists.value[list_index.value].content[droppedItemIndex].position =
+    draggedItemPosition;
+  lists.value[list_index.value].content[draggedItemIndex].position =
+    droppedItemPosition;
+};
+// Ordering & Drag and Drop END.
 </script>
 
 <template>
@@ -79,9 +113,14 @@ onBeforeRouteUpdate(async (to, from) => {
       {{ lists[list_index].title }}
     </h2>
     <div
-      v-for="(item, item_index) in lists[list_index].content"
+      v-for="(item, item_index) in filtered_list"
       :key="item.id"
+      draggable="true"
       class="todo-item"
+      @dragstart="startDrag($event, item)"
+      @drop="onDrop($event, item.position)"
+      @dragenter.prevent
+      @dragover.prevent
     >
       <input
         v-model="lists[list_index].content[item_index].checked"

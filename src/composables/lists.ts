@@ -1,10 +1,11 @@
 import { ref, Ref } from 'vue';
-import { getMaxId } from '../object-helper';
+import { getItemWithMaxValueByKey } from '../object-helper';
 
 interface Item {
-  id: number;
+  id: string | number;
   text: string;
   checked: boolean;
+  position: string | number;
 }
 
 export interface List {
@@ -44,7 +45,7 @@ export const useLists: () => ListsModule = () => {
 
   const newList = () => {
     lists.value.push({
-      id: getMaxId(lists.value) + 1,
+      id: getItemWithMaxValueByKey('id', lists.value) + 1,
       title: 'New list',
       content: [],
     });
@@ -67,9 +68,12 @@ export const useLists: () => ListsModule = () => {
 
   const addItem = (list_index: string | number) => {
     lists.value[list_index].content.push({
-      id: getMaxId(lists.value[list_index].content) + 1,
+      id: getItemWithMaxValueByKey('id', lists.value[list_index].content) + 1,
       text: 'New item',
       checked: false,
+      position:
+        getItemWithMaxValueByKey('position', lists.value[list_index].content) +
+        1,
     });
   };
 
@@ -78,6 +82,15 @@ export const useLists: () => ListsModule = () => {
     item_index: string | number
   ) => {
     lists.value[list_index].content.splice(item_index, 1);
+  };
+
+  const getItemIndexByPosition = (
+    list_id: string | number,
+    item_position: string | number
+  ) => {
+    return lists.value[list_id].content.findIndex(
+      (item: object) => item.position == item_position
+    );
   };
 
   const toggleCheckbox = (
@@ -97,6 +110,7 @@ export const useLists: () => ListsModule = () => {
   return {
     lists,
     getListIndexById,
+    getItemIndexByPosition,
     newList,
     deleteList,
     saveChanges,
