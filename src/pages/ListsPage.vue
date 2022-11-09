@@ -1,4 +1,5 @@
 <script setup>
+import Navbar from '../components/NavBar.vue';
 import ListCard from '../components/ListCard.vue';
 import { useLists } from '../composables/lists.ts';
 
@@ -12,6 +13,7 @@ const deleteListConfirmed = (list_id) => {
 </script>
 
 <template>
+  <Navbar :lists="lists" />
   <div class="main-column">
     <ListCard
       v-for="list in lists"

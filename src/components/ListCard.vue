@@ -45,7 +45,8 @@ const deleteList = () => {
       </div>
     </router-link>
     <confirm-button
-      :button-name="ButtonsName.DELETE"
+      :btn-name="ButtonsName.DELETE"
+      class="btn"
       @on-confirm="deleteList"
     ></confirm-button>
   </div>

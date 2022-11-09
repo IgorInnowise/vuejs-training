@@ -7,7 +7,7 @@ interface Item {
   checked: boolean;
 }
 
-interface List {
+export interface List {
   id: number;
   title: string;
   content: Item[];
@@ -34,7 +34,7 @@ interface ListsModule {
 }
 
 export const useLists: () => ListsModule = () => {
-  const getListFromStorage = () => {
+  const getListsFromStorage = () => {
     return JSON.parse(localStorage.getItem('lists') ?? '[]');
   };
 
@@ -55,14 +55,14 @@ export const useLists: () => ListsModule = () => {
     lists.value.splice(list_index, 1);
   };
 
-  const lists = ref(getListFromStorage());
+  const lists = ref(getListsFromStorage());
 
   const saveChanges = () => {
     localStorage.setItem('lists', JSON.stringify(lists.value));
   };
 
   const cancelChanges = () => {
-    lists.value = getListFromStorage();
+    lists.value = getListsFromStorage();
   };
 
   const addItem = (list_index: string | number) => {
@@ -88,6 +88,12 @@ export const useLists: () => ListsModule = () => {
       !lists.value[list_index].content[item_index].checked;
   };
 
+  const listsHaveChanges = (current_lists: List[]) => {
+    return (
+      JSON.stringify(current_lists) != JSON.stringify(getListsFromStorage())
+    );
+  };
+
   return {
     lists,
     getListIndexById,
@@ -98,5 +104,6 @@ export const useLists: () => ListsModule = () => {
     addItem,
     removeItem,
     toggleCheckbox,
+    listsHaveChanges,
   };
 };
