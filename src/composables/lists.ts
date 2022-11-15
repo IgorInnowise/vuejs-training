@@ -1,4 +1,4 @@
-import { ref, Ref } from 'vue';
+import { readonly, ref } from 'vue';
 import { getItemWithMaxValueByKey } from '../object-helper';
 
 interface Item {
@@ -15,24 +15,42 @@ export interface List {
 }
 
 interface ListsModule {
-  lists: Ref<List[]>;
-
-  getListIndexById: (id: string | number) => any;
-  newList: () => void;
-  deleteList: (list_index: string | number) => void;
-  saveChanges: () => void;
+  state: Readonly<{
+    lists: Readonly<List[]>;
+  }>;
+  deleteList: (list_id: string | number) => void;
   cancelChanges: () => void;
-
-  addItem: (list_index: string | number) => void;
   removeItem: (
     list_index: string | number,
     item_index: string | number
   ) => void;
+  orderLists: (list_index, orderBy) => void;
+  listsHaveChanges: (current_lists) => boolean;
+  newList: () => void;
   toggleCheckbox: (
     list_index: string | number,
     item_index: string | number
   ) => void;
+  saveChanges: () => void;
+  addItem: (list_index: string | number) => void;
+  updateListTitle: (e: object, list_index: string | number) => void;
+  swapItemsPosition: (
+    list_index: string | number,
+    draggedItemPosition: string | number,
+    droppedItemPosition: string | number
+  ) => void;
+  getItemIndexByPosition: (
+    list_id: string | number,
+    item_position: string | number
+  ) => any;
+  getListIndexById: (id: string | number) => any;
 }
+
+const getListsFromStorage = () => {
+  return JSON.parse(localStorage.getItem('lists') ?? '[]');
+};
+
+const lists = ref(getListsFromStorage());
 
 export const useLists: () => ListsModule = () => {
   const getListsFromStorage = () => {
@@ -52,11 +70,11 @@ export const useLists: () => ListsModule = () => {
     saveChanges();
   };
 
-  const deleteList = (list_index: string | number) => {
-    lists.value.splice(list_index, 1);
+  const deleteList = (list_id: string | number) => {
+    const index = getListIndexById(list_id);
+    lists.value.splice(index, 1);
+    saveChanges();
   };
-
-  const lists = ref(getListsFromStorage());
 
   const saveChanges = () => {
     localStorage.setItem('lists', JSON.stringify(lists.value));
@@ -101,14 +119,47 @@ export const useLists: () => ListsModule = () => {
       !lists.value[list_index].content[item_index].checked;
   };
 
-  const listsHaveChanges = (current_lists: List[]) => {
+  const listsHaveChanges = (current_lists) => {
     return (
       JSON.stringify(current_lists) != JSON.stringify(getListsFromStorage())
     );
   };
 
+  const updateListTitle = (e, list_index) => {
+    lists.value[list_index].title = e.target.innerText;
+  };
+
+  const orderLists = (list_index, orderBy) => {
+    lists.value[list_index].content.sort((a, b) =>
+      a[orderBy] > b[orderBy] ? 1 : -1
+    );
+  };
+
+  const swapItemsPosition = (
+    list_index,
+    draggedItemPosition,
+    droppedItemPosition
+  ) => {
+    const draggedItemIndex = getItemIndexByPosition(
+      list_index,
+      draggedItemPosition
+    );
+    const droppedItemIndex = getItemIndexByPosition(
+      list_index,
+      droppedItemPosition
+    );
+    // Swapping positions.
+    lists.value[list_index].content[droppedItemIndex].position =
+      draggedItemPosition;
+    lists.value[list_index].content[draggedItemIndex].position =
+      droppedItemPosition;
+    orderLists(list_index, 'position');
+  };
+
   return {
-    lists,
+    state: readonly({
+      lists: lists,
+    }),
     getListIndexById,
     getItemIndexByPosition,
     newList,
@@ -119,5 +170,8 @@ export const useLists: () => ListsModule = () => {
     removeItem,
     toggleCheckbox,
     listsHaveChanges,
+    updateListTitle,
+    orderLists,
+    swapItemsPosition,
   };
 };

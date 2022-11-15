@@ -5,16 +5,19 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     redirect: { name: 'lists' },
-  },
-  {
-    path: '/lists',
-    name: 'lists',
-    component: (): Promise<Component> => import('../pages/ListsPage.vue'),
-  },
-  {
-    path: '/list/:id',
-    name: 'list',
-    component: (): Promise<Component> => import('../pages/ListPage.vue'),
+    component: (): Promise<Component> => import('../pages/ListsPages.vue'),
+    children: [
+      {
+        path: '/lists',
+        name: 'lists',
+        component: (): Promise<Component> => import('../pages/ListsPage.vue'),
+      },
+      {
+        path: '/list/:id',
+        name: 'list',
+        component: (): Promise<Component> => import('../pages/ListPage.vue'),
+      },
+    ],
   },
 ];
 

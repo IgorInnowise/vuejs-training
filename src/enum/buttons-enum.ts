@@ -1,4 +1,4 @@
-export enum ButtonsName {
+export enum ButtonsNameEnum {
   DELETE = 'Delete',
   SAVE = 'Save',
   CANCEL = 'Cancel',
