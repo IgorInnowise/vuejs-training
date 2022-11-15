@@ -34,7 +34,7 @@ const saveClick = () => {
   router.push('/lists');
 };
 
-const deleteClick = (list_index) => {
+const deleteConfirmed = (list_index) => {
   deleteList(list_index);
   router.push('/lists');
 };
@@ -84,7 +84,7 @@ const onDrop = (event, droppedItemPosition) => {
       <ConfirmButton
         :btn-name="ButtonsNameEnum.DELETE"
         class="btn"
-        @on-confirm="deleteClick(list_index)"
+        @on-confirm="deleteConfirmed(list_index)"
       ></ConfirmButton>
       <button class="btn" @click="addItem(list_index)">Add item</button>
     </div>
