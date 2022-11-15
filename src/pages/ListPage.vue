@@ -24,7 +24,6 @@ const {
 
 const route = useRoute();
 const list_index = computed(() => getListIndexById(route.params.id));
-console.log(list_index.value);
 
 // Ordering and saving list's items, to check if it's changed after.
 orderLists(list_index.value, 'position');
