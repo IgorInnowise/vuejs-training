@@ -25,7 +25,7 @@ interface ListsModule {
     item_index: string | number
   ) => void;
   orderLists: (list_index, orderBy) => void;
-  listsHaveChanges: (current_lists) => boolean;
+  listsHaveChanges: () => boolean;
   newList: () => void;
   toggleCheckbox: (
     list_index: string | number,
@@ -119,10 +119,8 @@ export const useLists: () => ListsModule = () => {
       !lists.value[list_index].content[item_index].checked;
   };
 
-  const listsHaveChanges = (current_lists) => {
-    return (
-      JSON.stringify(current_lists) != JSON.stringify(getListsFromStorage())
-    );
+  const listsHaveChanges = () => {
+    return JSON.stringify(lists.value) != JSON.stringify(getListsFromStorage());
   };
 
   const updateListTitle = (e, list_index) => {

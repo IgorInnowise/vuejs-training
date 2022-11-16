@@ -4,6 +4,7 @@ import type { Component } from 'vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    name: 'home',
     redirect: { name: 'lists' },
     component: (): Promise<Component> => import('../pages/ListsPages.vue'),
     children: [

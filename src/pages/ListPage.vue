@@ -5,7 +5,6 @@ import { router } from '../router/index.ts';
 import { useLists } from '../composables/lists.ts';
 import { ButtonsNameEnum } from '../enum/buttons-enum.ts';
 import { computed } from 'vue';
-import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
 
 const {
   state,
@@ -15,7 +14,6 @@ const {
   deleteList,
   toggleCheckbox,
   getListIndexById,
-  listsHaveChanges,
   saveChanges,
   updateListTitle,
   orderLists,
@@ -25,39 +23,19 @@ const {
 const route = useRoute();
 const list_index = computed(() => getListIndexById(route.params.id));
 
-// Ordering and saving list's items, to check if it's changed after.
+// Ordering and saving list's items, to avoid a change confirmation after.
 orderLists(list_index.value, 'position');
 saveChanges();
 
 const saveClick = () => {
   saveChanges();
-  router.push('/lists');
+  router.push({ name: 'lists' });
 };
 
 const deleteConfirmed = (list_index) => {
   deleteList(list_index);
-  router.push('/lists');
+  router.push({ name: 'lists' });
 };
-
-// On route change.
-const leave = () => {
-  if (listsHaveChanges(state.lists)) {
-    const answer = window.confirm(
-      'Do you really want to leave? you have unsaved changes!'
-    );
-    if (!answer) {
-      return false;
-    }
-    cancelChanges();
-  }
-  return true;
-};
-onBeforeRouteLeave((to, from) => {
-  return leave();
-});
-onBeforeRouteUpdate(async (to, from) => {
-  return leave();
-});
 
 const startDrag = (event, item) => {
   event.dataTransfer.dropEffect = 'move';
@@ -69,7 +47,6 @@ const onDrop = (event, droppedItemPosition) => {
   const draggedItemPosition = event.dataTransfer.getData('itemPosition');
   swapItemsPosition(list_index.value, draggedItemPosition, droppedItemPosition);
 };
-// Ordering & Drag and Drop END.
 </script>
 
 <template>

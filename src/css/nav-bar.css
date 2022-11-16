@@ -5,7 +5,7 @@
 }
 
 /* Style the links inside the navigation bar */
-.topnav a {
+.topnav a, button.list-button {
     float: left;
     color: rgba(0, 0, 0, 0.9);
     text-align: center;
@@ -16,18 +16,20 @@
 }
 
 /* Change the color of links on hover */
-.topnav a:hover {
+.topnav a:hover, button.list-button {
     background-color: #ddd;
     color: black;
 }
 
-/* Add a color to the active/current link */
-.topnav a.main {
-    background-color: #04AA6D;
+.topnav button {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: white;
     color: rgba(0, 0, 0, 0.9);
 }
 
-.topnav a.list-button {
-    background-color: white;
-    color: rgba(0, 0, 0, 0.9);
-}z
+/* Add a color to the active/current link */
+.topnav a.main, button.active {
+    background-color: #04AA6D;
+}
