@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import type { Component } from 'vue';
+import { useLists } from '../composables/lists.ts';
+const { listsHaveChanges } = useLists();
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -28,4 +30,12 @@ export const router = createRouter({
   strict: true,
   history: routerHistory,
   routes,
+});
+
+window.addEventListener('beforeunload', (event) => {
+  if (listsHaveChanges()) {
+    event.preventDefault();
+    // Chrome requires returnValue to be set.
+    event.returnValue = '';
+  }
 });
