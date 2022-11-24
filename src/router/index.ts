@@ -4,8 +4,13 @@ import type { Component } from 'vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
+    name: 'Todo',
     component: (): Promise<Component> => import('../pages/HomePage.vue'),
+  },
+  {
+    path: '/todo/:id',
+    name: 'ToDoItem',
+    component: (): Promise<Component> => import('@/components/ToDoItems.vue'),
   },
 ];
 

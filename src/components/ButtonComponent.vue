@@ -14,18 +14,27 @@ button {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 5px;
-  background-color: #c6dfbb;
-  box-shadow: #c6dfbb 0px 3px 8px;
   font-size: 1rem;
   cursor: pointer;
   margin: 0.5rem;
+  transition: all 0.5s ease;
 }
 .accept {
-  background-color: #c6dfbb;
-  box-shadow: #c6dfbb 0px 3px 8px;
+  background-color: #c5deba;
+}
+.accept:hover {
+  box-shadow: #c5deba 0px 3px 8px;
 }
 .delete {
   background-color: #dfbbc6;
+}
+.delete:hover {
   box-shadow: #dfbbc6 0px 3px 8px;
+}
+.details {
+  background-color: #a4a7de;
+}
+.details:hover {
+  box-shadow: #a4a7de 0px 3px 8px;
 }
 </style>
