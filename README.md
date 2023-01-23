@@ -15,5 +15,4 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
 
-
-Use `yarn dev` to start developing version of project.
+Use `yarn dev` to launch the development version of project.
