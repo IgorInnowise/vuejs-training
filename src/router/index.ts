@@ -7,6 +7,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: (): Promise<Component> => import('../pages/HomePage.vue'),
   },
+  {
+    path: '/note/:id',
+    name: 'noteEdit',
+    component: (): Promise<Component> => import('../pages/NoteEdit.vue'),
+  },
 ];
 
 export const routerHistory = createWebHistory();
